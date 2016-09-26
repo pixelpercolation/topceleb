@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to Firebase Hosting</title>
+    <style media="screen">
+      body {
+        font-family: Roboto, Arial, sans-serif;
+        background: #ECEFF1;
+        color: rgba(0,0,0,0.87);
+      }
+
+      a {
+        color: rgb(3,155,229);
+      }
+      #message.start{
+        display:none;
+      }
+      #message {
+        max-width: 400px;
+        margin: 40px auto;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2),0 1px 1px 0 rgba(0,0,0,0.14),0 2px 1px -1px rgba(0,0,0,0.12);
+        border-radius: 2px;
+        background: white;
+        padding: 16px 24px;
+      }
+      #message .points{
+        float:right;
+        width:20%;
+      }
+      #message h1 {
+        float:left;
+        width:80%;
+        font-size: 22px;
+        font-weight: 500;
+        text-align: center;
+        margin: 0 0 16px;
+      }
+      
+
+      #message p {
+        clear: both;
+        font-weight: 300;
+        line-height: 150%;
+      }
+
+      #message ul {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+        text-align: center;
+      }
+      #message li{
+        margin-top: 5px;
+      }
+      #message li a {
+        display: inline-block;
+        padding: 8px;
+        margin-top: 5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: 500;
+        background: rgb(3,155,229);
+        color: white;
+        border: 1px solid rgb(3,155,229);
+        border-radius: 3px;
+        font-size: 14px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message" class="start">
+      <h1>Top Celeb </h1>
+      <h1 class="points"></h1>
+      <p class="question">Who has more tits?</p>
+      <ul>
+        <li><a class="a-name" href="#">Ross</a></li>
+        <li> OR </li>
+        <li><a class="b-name" href="#">Tom</a></li>
+      </ul>
+    </div>
+  </body>
+  <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAI1SBQ5AOHoKtywLouQmQ3xk2c_mXxEmA",
+      authDomain: "topceleb-5e105.firebaseapp.com",
+      databaseURL: "https://topceleb-5e105.firebaseio.com",
+      storageBucket: "topceleb-5e105.appspot.com",
+      messagingSenderId: "548658843199"
+    };
+    firebase.initializeApp(config);
+    var celebsRef = firebase.database().ref("celebs");
+    var catRef = firebase.database().ref("categories");
+    var answerA = {};
+    var answerB = {};
+    var question = {};
+    var points = 0;
+    var getCelebs = function()
+    {
+      
+      celebsRef.on("value",function(snapshot){
+        var count = snapshot.numChildren();
+        
+        var aIdx = Math.floor((Math.random() * count));
+        var bIdx = aIdx;
+        while(aIdx == bIdx)
+        {
+          bIdx = Math.floor((Math.random() * count));
+        }
+        
+        var queryA = celebsRef.orderByChild("index").startAt(aIdx).limitToFirst(1);
+        var queryB = celebsRef.orderByChild("index").startAt(bIdx).limitToFirst(1);
+        
+        queryA.on("value",function(aSnapshot){
+          aSnapshot.forEach(function(a){
+            $('.a-name').text(a.key);
+            $('.a-name').val(a.val().index);
+            answerA = a.val();
+          });
+        });
+        queryB.on("value",function(bSnapshot){
+          bSnapshot.forEach(function(a){
+            $('.b-name').text(a.key);
+            $('.b-name').val(a.val().index);
+            answerB = a.val();
+            $('#message').removeClass('start')
+          });
+        });
+      });    
+    }
+    var getQuestion = function(){
+      $('.points').text(points);
+      catRef.on("value",function(snapshot){
+        var key = "";
+        var count = snapshot.numChildren();
+        var idx = Math.floor((Math.random() * count));
+        var query = catRef.orderByChild("index").startAt(idx).limitToFirst(1);
+        query.on("value",function(children){
+          children.forEach(function(a){
+            key = a.key;
+            question = a.val();
+            $('.question').text(question.question);
+            getCelebs();
+          });
+        });
+      });
+    }
+    var win = function(){
+      alert("win");
+      points ++;
+      getQuestion();
+    }
+    var loss = function(){
+      alert("loss");
+      getQuestion();
+    }
+
+    getQuestion();
+    $('a').click(function(e){
+      if(question.type == "dob")
+      {
+          if((e.target.value == answerA.index) == (answerA.dob < answerB.dob))
+            win()
+          else
+            loss()
+
+          return
+      }
+      if(question.type == "height")
+      {
+          if((e.target.value == answerA.index) == (answerA.height > answerB.height))
+            win()
+          else
+            loss()
+          return
+      }
+    });
+
+  </script>
+</html>
