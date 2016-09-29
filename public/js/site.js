@@ -65,11 +65,11 @@ var getQuestion = function () {
 var win = function (ans) {
     $( ans).addClass("win")
     points++;
-    getQuestion();
+    setTimeout(getQuestion,2000);
 }
 var loss = function (ans) {
     $( ans).addClass("lose")
-    getQuestion();
+    setTimeout(getQuestion,2000);
 }
 
 getQuestion();
