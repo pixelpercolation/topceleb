@@ -1,130 +1,29 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Top Celeb</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Top Celeb</title>
-  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:600" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-</head>
-
-<body>
-  <span class="overlay">
-  </span>
-  <div>
-    <ul>
-      <li id="a">
-        <a class="a-name" href="#"></a>
-      </li>
-      <h1 id="q"></h1>
-      <li id="b">
-        <a class="b-name" href="#"></a>
-      </li>
-    </ul>
-  </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAI1SBQ5AOHoKtywLouQmQ3xk2c_mXxEmA",
-      authDomain: "topceleb-5e105.firebaseapp.com",
-      databaseURL: "https://topceleb-5e105.firebaseio.com",
-      storageBucket: "topceleb-5e105.appspot.com",
-      messagingSenderId: "548658843199"
-    };
-    firebase.initializeApp(config);
-    var celebsRef = firebase.database().ref("celebs");
-    var catRef = firebase.database().ref("categories");
-    var answerA = {};
-    var answerB = {};
-    var question = {};
-    var points = 0;
-    var getCelebs = function()
-    {
-      
-      celebsRef.on("value",function(snapshot){
-        var count = snapshot.numChildren();
-        
-        var aIdx = Math.floor((Math.random() * count));
-        var bIdx = aIdx;
-        while(aIdx == bIdx)
-        {
-          bIdx = Math.floor((Math.random() * count));
-        }
-        
-        var queryA = celebsRef.orderByChild("index").startAt(aIdx).limitToFirst(1);
-        var queryB = celebsRef.orderByChild("index").startAt(bIdx).limitToFirst(1);
-        
-        queryA.on("value",function(aSnapshot){
-          aSnapshot.forEach(function(a){
-            $('.a-name').text(a.key);
-            $('#a').css('background-image','url('+a.val().image+')');
-            $('.a-name').val(a.val().index);
-            answerA = a.val();
-          });
-        });
-        queryB.on("value",function(bSnapshot){
-          bSnapshot.forEach(function(a){
-            $('.b-name').text(a.key);
-            $('#b').css('background-image','url('+a.val().image+')');
-            $('.b-name').val(a.val().index);
-            answerB = a.val();
-            $('#message').removeClass('start')
-          });
-        });
-      });    
-    }
-    var getQuestion = function(){
-      $('.points').text(points);
-      catRef.on("value",function(snapshot){
-        var key = "";
-        var count = snapshot.numChildren();
-        var idx = Math.floor((Math.random() * count));
-        var query = catRef.orderByChild("index").startAt(idx).limitToFirst(1);
-        query.on("value",function(children){
-          children.forEach(function(a){
-            key = a.key;
-            question = a.val();
-            $('#q').text(question.question);
-            getCelebs();
-          });
-        });
-      });
-    }
-    var win = function(){
-      alert("win");
-      points ++;
-      getQuestion();
-    }
-    var loss = function(){
-      alert("loss");
-      getQuestion();
-    }
-
-    getQuestion();
-    $('a').click(function(e){
-      if(question.type == "dob")
-      {
-          if((e.target.value == answerA.index) == (answerA.dob < answerB.dob))
-            win()
-          else
-            loss()
-
-          return
-      }
-      if(question.type == "height")
-      {
-          if((e.target.value == answerA.index) == (answerA.height > answerB.height))
-            win()
-          else
-            loss()
-          return
-      }
-    });
-
-  </script>
-
+  <body>
+    <span class="overlay">
+    </span>
+    <div>
+      <ul>
+        <li id="a">
+          <a class="a-name" href="#"></a>
+        </li>
+        <h1 id="q"></h1>
+        <li id="b">
+          <a class="b-name" href="#"></a>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script src="js/site.js"/>
 </html>
