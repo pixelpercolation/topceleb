@@ -1,9 +1,9 @@
   body {
       margin: 0;
       padding: 0;
-    }
-    
-    #q {
+  }
+  
+  #q {
       position: absolute;
       z-index: 100;
       left: 50%;
@@ -14,18 +14,18 @@
       color: #fff;
       text-align: center;
       font-size: 15vw;
-    }
-    
-    ul {
+  }
+  
+  ul {
       padding: 0;
       margin: 0;
       list-style: none;
       position: absolute;
       height: 100%;
       width: 100%;
-    }
-    
-    li {
+  }
+  
+  li {
       background-size: cover;
       background-position: center;
       text-align: center;
@@ -33,9 +33,9 @@
       width: 100vw;
       margin: 0 auto;
       position: relative;
-    }
-
-    .overlay {
+  }
+  
+  .overlay {
       position: absolute;
       display: block;
       width: 100%;
@@ -43,23 +43,35 @@
       background-color: #000;
       opacity: 0.5;
       z-index: 100;
-    }
-    
-    a {
+  }
+  
+  a {
       text-decoration: none;
       position: fixed;
       z-index: 101;
       font-size: 100px;
       font-family: 'Josefin Slab', serif;
       color: #fff;
-      font-size: 15vw;
-    }
-
-    .a-name {
-        text-align: right;
-    }
-
-    .b-name {
-        text-align: left;
-    }
-    
+      font-size: 8vw;
+      padding: 20px;
+      word-spacing: 1000vw;
+  }
+  
+  .a-name {
+      text-align: right;
+      right: 0;
+  }
+  
+  .b-name {
+      text-align: left;
+      left: 0;
+      bottom: 0;
+  }
+  
+  .win {
+      background-color: green;
+  }
+  
+  .lose {
+      background-color: red;
+  }
