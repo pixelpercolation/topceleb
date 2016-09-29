@@ -53,8 +53,10 @@
       font-family: 'Josefin Slab', serif;
       color: #fff;
       font-size: 8vw;
-      padding: 20px;
+      padding: 2%;
       word-spacing: 1000vw;
+      height:48%;
+      transition: background-color 500ms;
   }
   
   .a-name {
@@ -69,9 +71,9 @@
   }
   
   .win {
-      background-color: green;
+      background-color: rgba(0,255,0,0.5);
   }
   
   .lose {
-      background-color: red;
+      background-color: rgba(255,0,0,0.5);;
   }

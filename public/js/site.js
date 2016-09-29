@@ -46,6 +46,8 @@ var getCelebs = function () {
     });
 }
 var getQuestion = function () {
+    $('.win').removeClass('win');
+    $('.lose').removeClass('lose');
     $('.points').text(points);
     catRef.on("value", function (snapshot) {
         var key = "";
@@ -63,45 +65,56 @@ var getQuestion = function () {
     });
 }
 var win = function (ans) {
-    $( ans).addClass("win")
+    var otherAns = "#a";
+    if(ans =="#a")
+        otherAns = "#b";
+    $( ans).find('a').addClass("win");
+    $( otherAns).find('a').addClass("lose");
     points++;
-    setTimeout(getQuestion,2000);
+    setTimeout(function(){
+            getQuestion();
+        },1000);
 }
 var loss = function (ans) {
-    $( ans).addClass("lose")
-    setTimeout(getQuestion,2000);
+    var otherAns = "#a";
+    if(ans =="#a")
+        otherAns = "#b";
+    $( ans).find('a').addClass("lose")
+    $( otherAns).find('a').addClass("win")
+    setTimeout(function(){
+            getQuestion();
+        },1000);
 }
 
 getQuestion();
 $('a').click(function (e) {
+    var ans = '#'+ e.target.parentElement.id
     if (question.type == "dob") {
         if ((e.target.value == answerA.index) == (answerA.dob < answerB.dob))
-            win(e.target.id)
+            win(ans);
         else
-            loss(e.target.id)
-
+            loss(ans);
         return
     }
     if (question.type == "dob2") {
         if ((e.target.value == answerA.index) == (answerA.dob > answerB.dob))
-            win(e.target.id)
+            win(ans);
         else
-            loss(e.target.id)
-
+            loss(ans);
         return
     }
     if (question.type == "height") {
         if ((e.target.value == answerA.index) == (answerA.height > answerB.height))
-            win(e.target.id)
+            win(ans);
         else
-            loss(e.target.id)
+            loss(ans);
         return
     }
     if (question.type == "height2") {
         if ((e.target.value == answerA.index) == (answerA.height < answerB.height))
-            win(e.target.id)
+            win(ans);
         else
-            loss(e.target.id)
+            loss(ans);
         return
     }
 
