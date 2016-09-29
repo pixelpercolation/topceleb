@@ -1,62 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Welcome to Firebase Hosting</title>
-    <style media="screen">
-      body{
-        margin: 0;
-        padding: 0;
-      }
-      #q{
-        position:absolute;
-        top:50%;
-        width:100%;
-        font-size:5em;
-        text-align:center;
-        transform: translateY(-110%);
-        z-index:1000;
-        -webkit-text-stroke: 1px #fff;
-      }
-      ul{
-        padding:0;
-        margin:0;
-        list-style:none;
-        position:absolute;
-        height:100%;
-        width:100%;
-      }
-      li{
-        background-size: cover;
-        text-align:center;
-        height:50%;
-        width:100%;
-        max-width:80%;
-        margin: 0 auto; 
-        position:relative;
-      }
-      
-      a{
-        text-align:center;
-        position:absolute;
-        height:100%;
-        width:100%;
-        left:0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 id="q"></h1>
-    <div>
-      <ul>
-        <li id="a"><a class="a-name" href="#"></a></li>
-        <li id="b"><a class="b-name" href="#"></a></li>
-      </ul>
-    </div>
-  </body>
-  <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-  <script>
+
+<head>
+  <meta charset="utf-8">
+  <title>Top Celeb</title>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+</head>
+
+<body>
+  <span class="overlay">
+  </span>
+  <div>
+    <ul>
+      <li id="a">
+        <a class="a-name" href="#"></a>
+      </li>
+      <h1 id="q"></h1>
+      <li id="b">
+        <a class="b-name" href="#"></a>
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyAI1SBQ5AOHoKtywLouQmQ3xk2c_mXxEmA",
@@ -156,4 +126,5 @@
     });
 
   </script>
+
 </html>
