@@ -24,8 +24,9 @@ var loss = function (ans) {
 
 var quiz = function(opts){
     this.variables = {
-        current :0,
-        maxAns:2,
+        current: 0,
+        score: 0,
+        maxAns: 2,
         onWin: function(){},
         onLoss: function(){},
         question: {},
@@ -42,7 +43,20 @@ var quiz = function(opts){
         });
     };
     this.checkAnswer = function(answer){
-        console.log("q=",variables.question.question.type,"a=",answer,"o=",variables.question.celebs.map(function(a){return a.index}))
+        var options = variables.question.celebs.map(function(ans){return ans.index}).join(',');
+        $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/checkAnswer?question="+variables.question.question.type+"&answer="+answer+"&options="+options,function(response){
+            if(response.correct)
+            {
+                variables.score ++;
+                variables.current = answer;
+            }
+            else
+            {
+                variables.current = null;
+                variables.score = 0;
+            }
+            getQuestion();
+        });
     };
     this.renderQuestion=function(){
         var list = $('ul');
@@ -57,6 +71,7 @@ var quiz = function(opts){
             });
             list.append(ans);
         });
+        $('.score').text("Score: "+variables.score);
         
     };
     //TODO opts over vars

@@ -34,17 +34,27 @@ module.exports = (context, callback) => {
             }));
         });
         Promise.all(promiseArray).then(celebs => {
-            var max = Math.max.apply(Math, celebs.map(x => x.data));
-            var min = Math.min.apply(Math, celebs.map(x => x.data));
+            var mapFunc = x => x.data;
+            if (question == "dob")
+                mapFunc = x => Date.parse(x.data);
+            var ans = celebs.filter(x => x.index == answer).map(mapFunc)[0];
+            var max = Math.max.apply(Math, celebs.map(mapFunc));
+            var min = Math.min.apply(Math, celebs.map(mapFunc));
             if (inverse) {
-                response = min == answer;
+                response = min == ans;
             }
             else {
-                response = max == answer;
+                response = max == ans;
             }
-            callback(null, response);
+            console.log(question, min, max, ans, response)
+            callback(null, {
+                correct: response
+            });
         }).catch(reason => {
-            callback(null, reason);
+            callback(null,
+                {
+                    error: reason
+                });
         });
     });
 };
