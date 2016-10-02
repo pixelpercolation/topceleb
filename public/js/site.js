@@ -1,69 +1,3 @@
-var config = {
-    apiKey: "AIzaSyAI1SBQ5AOHoKtywLouQmQ3xk2c_mXxEmA",
-    authDomain: "topceleb-5e105.firebaseapp.com",
-    databaseURL: "https://topceleb-5e105.firebaseio.com",
-    storageBucket: "topceleb-5e105.appspot.com",
-    messagingSenderId: "548658843199"
-};
-firebase.initializeApp(config);
-var celebsRef = firebase.database().ref("celebs");
-var catRef = firebase.database().ref("categories");
-var answerA = {};
-var answerB = {};
-var question = {};
-var points = 0;
-var getCelebs = function () {
-
-    celebsRef.on("value", function (snapshot) {
-        var count = snapshot.numChildren();
-
-        var aIdx = Math.floor((Math.random() * count));
-        var bIdx = aIdx;
-        while (aIdx == bIdx) {
-            bIdx = Math.floor((Math.random() * count));
-        }
-
-        var queryA = celebsRef.orderByChild("index").startAt(aIdx).limitToFirst(1);
-        var queryB = celebsRef.orderByChild("index").startAt(bIdx).limitToFirst(1);
-
-        queryA.on("value", function (aSnapshot) {
-            aSnapshot.forEach(function (a) {
-                $('.a-name').text(a.key);
-                $('#a').css('background-image', 'url(' + a.val().image + ')');
-                $('.a-name').val(a.val().index);
-                answerA = a.val();
-            });
-        });
-        queryB.on("value", function (bSnapshot) {
-            bSnapshot.forEach(function (a) {
-                $('.b-name').text(a.key);
-                $('#b').css('background-image', 'url(' + a.val().image + ')');
-                $('.b-name').val(a.val().index);
-                answerB = a.val();
-                $('#message').removeClass('start')
-            });
-        });
-    });
-}
-var getQuestion = function () {
-    $('.win').removeClass('win');
-    $('.lose').removeClass('lose');
-    $('.points').text(points);
-    catRef.on("value", function (snapshot) {
-        var key = "";
-        var count = snapshot.numChildren();
-        var idx = Math.floor((Math.random() * count));
-        var query = catRef.orderByChild("index").startAt(idx).limitToFirst(1);
-        query.on("value", function (children) {
-            children.forEach(function (a) {
-                key = a.key;
-                question = a.val();
-                $('#q').text(question.question);
-                getCelebs();
-            });
-        });
-    });
-}
 var win = function (ans) {
     var otherAns = "#a";
     if(ans =="#a")
@@ -81,41 +15,56 @@ var loss = function (ans) {
         otherAns = "#b";
     $( ans).find('a').addClass("lose")
     $( otherAns).find('a').addClass("win")
+    points = 0;
     setTimeout(function(){
             getQuestion();
         },1000);
 }
 
-getQuestion();
-$('a').click(function (e) {
-    var ans = '#'+ e.target.parentElement.id
-    if (question.type == "dob") {
-        if ((e.target.value == answerA.index) == (answerA.dob < answerB.dob))
-            win(ans);
-        else
-            loss(ans);
-        return
-    }
-    if (question.type == "dob2") {
-        if ((e.target.value == answerA.index) == (answerA.dob > answerB.dob))
-            win(ans);
-        else
-            loss(ans);
-        return
-    }
-    if (question.type == "height") {
-        if ((e.target.value == answerA.index) == (answerA.height > answerB.height))
-            win(ans);
-        else
-            loss(ans);
-        return
-    }
-    if (question.type == "height2") {
-        if ((e.target.value == answerA.index) == (answerA.height < answerB.height))
-            win(ans);
-        else
-            loss(ans);
-        return
-    }
 
-});
+var quiz = function(opts){
+    this.variables = {
+        current :0,
+        maxAns:2,
+        onWin: function(){},
+        onLoss: function(){},
+        question: {},
+        answerTemplate:`
+            <li>
+                <a class="a-name" href="#">[NAME]</a>
+            </li>
+        `
+    };
+    this.getQuestion = function(){
+        $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/getQuestion?max="+variables.maxAns+"&current="+variables.current,function(question){
+            variables.question = question;
+            renderQuestion();
+        });
+    };
+    this.checkAnswer = function(answer){
+        console.log("q=",variables.question.question.type,"a=",answer,"o=",variables.question.celebs.map(function(a){return a.index}))
+    };
+    this.renderQuestion=function(){
+        var list = $('ul');
+        list.empty();
+        list.append($('<h1 id="q">').text(variables.question.question.text));
+        variables.question.celebs.forEach(function(answer){
+            var ans = $(variables.answerTemplate.replace('[NAME]',answer.name));
+            ans.css('background-image','url('+answer.image+')')
+            ans.attr('data-idx',answer.index);
+            ans.click(function(){
+                checkAnswer(ans.attr('data-idx'));
+            });
+            list.append(ans);
+        });
+        
+    };
+    //TODO opts over vars
+    
+    variables.current = Math.floor((Math.random() * variables.maxAns));
+    getQuestion();
+};
+
+
+
+var topCeleb = quiz();
