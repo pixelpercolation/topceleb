@@ -1,10 +1,18 @@
   body {
       margin: 0;
       padding: 0;
+      font-family: 'Josefin Slab', serif;
   }
-  
+  .score{    
+        position: absolute;
+        top: 0;
+        z-index: 100;
+        color: #fff;
+        font-size: 8vw;
+    }
   #q {
       position: absolute;
+      top:50vh;
       z-index: 100;
       left: 50%;
       transform: translate(-50%, -110%);
@@ -50,7 +58,6 @@
       position: fixed;
       z-index: 101;
       font-size: 100px;
-      font-family: 'Josefin Slab', serif;
       color: #fff;
       font-size: 8vw;
       padding: 2%;
