@@ -48,7 +48,11 @@ module.exports = (context, callback) => {
             }
             console.log(question, min, max, ans, response)
             callback(null, {
-                correct: response
+                correct: response,
+                correctAnswer: inverse?min:max,
+                answers: celebs.map(x => {
+                return {    index:x.index,data:mapFunc(x)}
+                })
             });
         }).catch(reason => {
             callback(null,
