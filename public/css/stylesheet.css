@@ -3,22 +3,24 @@
       padding: 0;
       font-family: 'Josefin Slab', serif;
   }
-  .score{    
-        position: absolute;
-        top: 0;
-        z-index: 100;
-        color: #fff;
-        font-size: 8vw;
-    }
+  
+  .score {
+      position: absolute;
+      top: 0;
+      z-index: 100;
+      color: #fff;
+      font-size: 8vw;
+  }
+  
   #q {
       position: absolute;
-      top:50vh;
+      top: 50vh;
       z-index: 100;
       left: 50%;
-      transform: translate(-50%, -110%);
+      -webkit-transform: translate(-50%, -110%);
+              transform: translate(-50%, -110%);
       font-size: 100px;
       width: 100%;
-      font-family: 'Josefin Slab', serif;
       color: #fff;
       text-align: center;
       font-size: 15vw;
@@ -62,25 +64,21 @@
       font-size: 8vw;
       padding: 2%;
       word-spacing: 1000vw;
-      height:48%;
-      transition: background-color 500ms;
+      height: 48%;
+      -webkit-transition: background-color .5s;
+      transition: background-color .5s;
   }
   
-  .a-name {
+  .name {
       text-align: right;
       right: 0;
   }
   
-  .b-name {
-      text-align: left;
-      left: 0;
-      bottom: 0;
-  }
-  
   .win {
-      background-color: rgba(0,255,0,0.5);
+      background-color: rgba(0, 255, 0, 0.5);
   }
   
   .lose {
-      background-color: rgba(255,0,0,0.5);;
+      background-color: rgba(255, 0, 0, 0.5);
+      ;
   }
