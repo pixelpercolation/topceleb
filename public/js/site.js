@@ -30,9 +30,10 @@ var quiz = function (opts) {
         onWin: function (idx) {},
         onLoss: function (idx) {},
         renderQuestion: function () {
+            $('li').find('span').addClass('invisible')
             var list = $('ul');
             list.empty();
-            list.append($('<h1 id="q">').text(variables.question.question.text));
+            list.append($('<h1 class="invisible" id="q">').text(variables.question.question.text));
             variables.question.celebs.forEach(function (answer) {
                 var ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
                 ans.css('background-image', 'url(' + answer.image + ')')
@@ -42,12 +43,15 @@ var quiz = function (opts) {
                 });
                 list.append(ans);
             });
-            $('.score').text("Score: " + variables.score);
+            $('.score').text("" + variables.score);
         },
         question: {},
         answerTemplate: `
             <li>
-                <a class="name" href="#">[NAME]</a>
+                <a class="name" href="#">
+                <p>[NAME]</p>
+                <span class="invisible">[VALUE]</span>
+                </a>
             </li>
         `
     };
@@ -96,13 +100,17 @@ var topCeleb = quiz({
 });
 
 var renderAnswer = function(win,answer,answers){
-    
+    answers.forEach(function(a){
+        $('li[data-idx="'+a.index+'"]').find('span').text(a.data);
+    });
     var correct = answers.filter(function(a){
         return a.data == answer
     }).map(function(x){
         return x.index
     });
+    $('h1').addClass('invisible');
     $('li').find('a').addClass('lose');
+    $('li').find('span').removeClass('invisible');
     correct.forEach(function(idx){
         $('li[data-idx="'+idx+'"]').find('a').removeClass('lose').addClass('win');
     });
