@@ -33,7 +33,7 @@ var quiz = function (opts) {
             $('li').find('span').addClass('invisible')
             var list = $('ul');
             list.empty();
-            list.append($('<h1 class="invisible" id="q">').text(variables.question.question.text));
+            list.append($('<h1 id="q">').text(variables.question.question.text));
             variables.question.celebs.forEach(function (answer) {
                 var ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
                 ans.css('background-image', 'url(' + answer.image + ')')
@@ -73,11 +73,11 @@ var quiz = function (opts) {
             if (response.correct) {
                 variables.score++;
                 variables.current = answer;
-                variables.onWin(response.correctAnswer,response.answers);
+                variables.onWin(response);
             } else {
                 variables.current = null;
                 variables.score = 0;
-                variables.onLose(response.correctAnswer,response.answers);
+                variables.onLose(response);
             }
            setTimeout(getQuestion,1000);
         });
@@ -91,17 +91,17 @@ var quiz = function (opts) {
 
 
 var topCeleb = quiz({
-    onWin: function(answer,answers){
-        renderAnswer(true,answer,answers);
+    onWin: function(answer){
+        renderAnswer(true,answer.correctAnswer,answer.answers);
     },
-    onLose: function(answer,answers){
-        renderAnswer(false,answer,answers);
+    onLose: function(answer){
+        renderAnswer(false,answer.correctAnswer,answer.answers);
     },
 });
 
 var renderAnswer = function(win,answer,answers){
     answers.forEach(function(a){
-        $('li[data-idx="'+a.index+'"]').find('span').text(a.data);
+        $('li[data-idx="'+a.index+'"]').find('span').text(a.friendly);
     });
     var correct = answers.filter(function(a){
         return a.data == answer

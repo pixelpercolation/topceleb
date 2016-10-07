@@ -49,9 +49,13 @@ module.exports = (context, callback) => {
             console.log(question, min, max, ans, response)
             callback(null, {
                 correct: response,
-                correctAnswer: inverse?min:max,
+                correctAnswer: inverse ? min : max,
                 answers: celebs.map(x => {
-                return {    index:x.index,data:mapFunc(x)}
+                    return {
+                        index: x.index,
+                        data: mapFunc(x),
+                        friendly: getFriendlyAnswer(question, x.data)
+                    }
                 })
             });
         }).catch(reason => {
@@ -62,3 +66,16 @@ module.exports = (context, callback) => {
         });
     });
 };
+
+var getFriendlyAnswer = function (question, answer) {
+    switch (question) {
+        case "dob":
+            return Math.abs((new Date(Date.parse(answer) - Date.now())).getUTCFullYear() - 1969);
+        case "worth":
+            return '$' + answer + 'm';
+        case "height":
+            return answer + 'm'
+        default:
+            return answer;
+    }
+}
