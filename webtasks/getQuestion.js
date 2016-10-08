@@ -10,6 +10,10 @@ module.exports = function (context, callback) {
         firebase.initializeApp(config);
 
     var currIdx = parseInt(context.query.current);
+    var excludeIdx = parseInt(context.query.exclude);
+    var exclude = [];
+    if(!isNaN(excludeIdx))
+        exclude.push(excludeIdx);
     var celebsRef = firebase.database().ref("celebs");
     var catRef = firebase.database().ref("categories");
 
@@ -31,7 +35,7 @@ module.exports = function (context, callback) {
                 var indexes = [first];
                 while (indexes.length < max) {
                     var next = first;
-                    while (indexes.indexOf(next) > -1) {
+                    while (indexes.indexOf(next) > -1 && exclude.indexOf(next)) {
                         next = Math.floor((Math.random() * count));
                     }
                     indexes.push(next);

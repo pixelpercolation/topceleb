@@ -69,7 +69,7 @@ var quiz = function (opts) {
     }
 
     this.getQuestion = function () {
-        $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/getQuestion?max=" + variables.maxAns + "&current=" + variables.current, function (question) {
+        $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/getQuestion?max=" + variables.maxAns + "&current=" + variables.current +'&exclude='+variables.exclude, function (question) {
             variables.question = question;
             variables.renderQuestion();
         });
@@ -83,9 +83,16 @@ var quiz = function (opts) {
             if (response.correct) {
                 variables.score++;
                 variables.current = answer;
+                var exclude = variables.question.celebs.map(function (ans) {
+                    return ans.index
+                }).filter(function(a){
+                    return a!=answer;
+                });
+                variables.exclude = exclude[0];
                 variables.onWin(response);
             } else {
                 variables.current = null;
+                variables.exclude = null;
                 variables.score = 0;
                 variables.onLose(response);
             }
