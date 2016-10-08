@@ -27,23 +27,32 @@ var quiz = function (opts) {
         current: 0,
         score: 0,
         maxAns: 2,
-        onWin: function (idx) {},
-        onLoss: function (idx) {},
+        onWin: function (response) {},
+        onLoss: function (response) {},
+        onAnswer: function(idx) {},
         renderQuestion: function () {
             $('li').find('span').addClass('invisible')
             var list = $('ul');
-            list.empty();
-            list.append($('<h1 id="q">').text(variables.question.question.text));
+            $('#q').text(variables.question.question.text).removeClass('invisible');
+            $('li[data-idx]').each(function(i,a){
+                var idx = parseInt($(a).attr('data-idx'));
+                if(variables.question.celebs.map(function(c){return c.index}).indexOf(idx) < 0)
+                    $(a).remove();
+            });
             variables.question.celebs.forEach(function (answer) {
-                var ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
-                ans.css('background-image', 'url(' + answer.image + ')')
+                var ans = list.find('li[data-idx="'+answer.index+'"]');
+                if(ans.length == 0)
+                    ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
+                else
+                    ans.find('a').removeClass('win').removeClass('lose');
+                ans.css('background-image', 'url(' + answer.image + ')');
                 ans.attr('data-idx', answer.index);
                 ans.click(function () {
                     checkAnswer(ans.attr('data-idx'));
                 });
                 list.append(ans);
             });
-            $('.score').text("" + variables.score);
+            $('.score').text(variables.score);
         },
         question: {},
         answerTemplate: `
@@ -66,6 +75,7 @@ var quiz = function (opts) {
         });
     };
     this.checkAnswer = function (answer) {
+        variables.onAnswer(answer);
         var options = variables.question.celebs.map(function (ans) {
             return ans.index
         }).join(',');
@@ -82,8 +92,6 @@ var quiz = function (opts) {
            setTimeout(getQuestion,1000);
         });
     };
-    
-
     variables.current = Math.floor((Math.random() * variables.maxAns));
     getQuestion();
 };
@@ -97,6 +105,9 @@ var topCeleb = quiz({
     onLose: function(answer){
         renderAnswer(false,answer.correctAnswer,answer.answers);
     },
+    onAnswer: function(answer){
+        $('li').unbind()
+    }
 });
 
 var renderAnswer = function(win,answer,answers){
