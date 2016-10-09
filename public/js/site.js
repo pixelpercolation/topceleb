@@ -1,59 +1,14 @@
-var win = function (ans) {
-    var otherAns = "#a";
-    if (ans == "#a")
-        otherAns = "#b";
-    $(ans).find('a').addClass("win");
-    $(otherAns).find('a').addClass("lose");
-    points++;
-    setTimeout(function () {
-        getQuestion();
-    }, 1000);
-}
-var loss = function (ans) {
-    var otherAns = "#a";
-    if (ans == "#a")
-        otherAns = "#b";
-    $(ans).find('a').addClass("lose")
-    $(otherAns).find('a').addClass("win")
-    points = 0;
-    setTimeout(function () {
-        getQuestion();
-    }, 1000);
-}
-
-
 var quiz = function (opts) {
     this.variables = {
         current: 0,
         score: 0,
         maxAns: 2,
+        timeoutLength: 3000,
         onWin: function (response) {},
         onLoss: function (response) {},
         onAnswer: function(idx) {},
-        renderQuestion: function () {
-            $('li').find('span').addClass('invisible')
-            var list = $('ul');
-            $('#q').text(variables.question.question.text).removeClass('invisible');
-            $('li[data-idx]').each(function(i,a){
-                var idx = parseInt($(a).attr('data-idx'));
-                if(variables.question.celebs.map(function(c){return c.index}).indexOf(idx) < 0)
-                    $(a).remove();
-            });
-            variables.question.celebs.forEach(function (answer) {
-                var ans = list.find('li[data-idx="'+answer.index+'"]');
-                if(ans.length == 0)
-                    ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
-                else
-                    ans.find('a').removeClass('win').removeClass('lose');
-                ans.css('background-image', 'url(' + answer.image + ')');
-                ans.attr('data-idx', answer.index);
-                ans.click(function () {
-                    checkAnswer(ans.attr('data-idx'));
-                });
-                list.append(ans);
-            });
-            $('.score').text(variables.score);
-        },
+        onLoad: function(){},
+        renderQuestion: function () {},
         question: {},
         answerTemplate: `
             <li>
@@ -96,26 +51,41 @@ var quiz = function (opts) {
                 variables.score = 0;
                 variables.onLose(response);
             }
-           setTimeout(getQuestion,1000);
+            variables.timeout = setTimeout(function () {
+                getQuestion();
+            }, variables.timeoutLength);
         });
     };
     variables.current = Math.floor((Math.random() * variables.maxAns));
+    variables.onLoad();
     getQuestion();
 };
 
-
-
-var topCeleb = quiz({
-    onWin: function(answer){
-        renderAnswer(true,answer.correctAnswer,answer.answers);
-    },
-    onLose: function(answer){
-        renderAnswer(false,answer.correctAnswer,answer.answers);
-    },
-    onAnswer: function(answer){
-        $('li').unbind()
-    }
-});
+var renderQuestion = function(){
+    $('.next').hide();
+    $('li').find('span').addClass('invisible')
+        var list = $('ul');
+        $('#q').text(variables.question.question.text).removeClass('invisible');
+        $('li[data-idx]').each(function(i,a){
+            var idx = parseInt($(a).attr('data-idx'));
+            if(variables.question.celebs.map(function(c){return c.index}).indexOf(idx) < 0)
+                $(a).remove();
+        });
+        variables.question.celebs.forEach(function (answer) {
+            var ans = list.find('li[data-idx="'+answer.index+'"]');
+            if(ans.length == 0)
+                ans = $(variables.answerTemplate.replace('[NAME]', answer.name));
+            else
+                ans.find('a').removeClass('win').removeClass('lose');
+            ans.css('background-image', 'url(' + answer.image + ')');
+            ans.attr('data-idx', answer.index);
+            ans.click(function () {
+                checkAnswer(ans.attr('data-idx'));
+            });
+            list.append(ans);
+        });
+        $('.score').text(variables.score);
+}
 
 var renderAnswer = function(win,answer,answers){
     answers.forEach(function(a){
@@ -132,5 +102,40 @@ var renderAnswer = function(win,answer,answers){
     correct.forEach(function(idx){
         $('li[data-idx="'+idx+'"]').find('a').removeClass('lose').addClass('win');
     });
-    
+    $('.next').fadeIn();
 }
+
+var onLoad = function(){
+    $('.next').click(next);
+}
+
+var next = function(){
+    clearTimeout(variables.timeout);
+    getQuestion();
+}
+var interval = function(){};
+var topCeleb = quiz({
+    onWin: function(answer){
+        renderAnswer(true,answer.correctAnswer,answer.answers);
+    },
+    onLose: function(answer){
+        renderAnswer(false,answer.correctAnswer,answer.answers);
+    },
+    onAnswer: function(answer){
+        $('li').unbind()
+        var countdown = variables.timeoutLength/1000;
+        $('.next').text('Next ('+countdown+')');
+        interval = setInterval(function(){
+            countdown--;
+            $('.next').text('Next ('+countdown+')');
+        },1000)
+    },
+    renderQuestion: function(){
+        clearInterval(interval);
+        renderQuestion();
+    },
+    onLoad:function(){
+        $('.next').text('Next ('+variables.timeoutLength/1000+')');
+        onLoad();
+    }
+});

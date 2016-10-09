@@ -4,6 +4,14 @@
       font-family: 'Josefin Slab', serif;
       background-color: #767676;
   }
+
+  .next{
+    width: 100%;
+    position: absolute;
+    z-index: 10000;
+    bottom: 0;
+    font-size: 7em;
+  }
   
   .container {
       width: 357px;
