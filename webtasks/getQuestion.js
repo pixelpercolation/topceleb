@@ -35,7 +35,7 @@ module.exports = function (context, callback) {
                 var indexes = [first];
                 while (indexes.length < max) {
                     var next = first;
-                    while (indexes.indexOf(next) > -1 && exclude.indexOf(next)) {
+                    while (indexes.indexOf(next) > -1 || exclude.indexOf(next) > -1) {
                         next = Math.floor((Math.random() * count));
                     }
                     indexes.push(next);
