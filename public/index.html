@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Famous Face Off</title>
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:600" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-  </head>
 
-  <body>
-    <span class="overlay">
+<head>
+  <meta charset="utf-8">
+  <title>Famous Face Off</title>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:600" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+</head>
+
+<body>
+    <svg id="svg" width="200" height="200" viewPort="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <circle id="bar" r="90" cx="-100" cy="100" fill="transparent" stroke-dasharray="565.48"></circle>
+    </svg>
+  <span class="overlay">
     </span>
-    <span class="score">
+  <span class="score">
     </span>
-    <div>
-      <button class="next">Next</button>
-      <ul>
-        <h1 id="q" class="invisible"></h1>
-      </ul>
-    </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
-  <script src="js/site.js"></script>
+  <div>
+    <button class="next">Next</button>
+    <ul>
+      <h1 id="q" class="invisible"></h1>
+    </ul>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script src="js/site.js"></script>
+
 </html>
