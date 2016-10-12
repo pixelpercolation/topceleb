@@ -24,6 +24,7 @@ var quiz = function (opts) {
     }
 
     this.getQuestion = function () {
+        variables.onGetQuestion();
         $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/getQuestion?max=" + variables.maxAns + "&current=" + variables.current +'&exclude='+variables.exclude, function (question) {
             variables.question = question;
             variables.renderQuestion();
@@ -62,9 +63,6 @@ var quiz = function (opts) {
 };
 
 var renderQuestion = function(){
-    $('.next').hide();
-    $('.next').removeClass('animate').removeClass('wrong');
-    
     $('li').find('span').addClass('invisible')
         var list = $('ul');
         $('#q').text(variables.question.question.text).removeClass('invisible');
@@ -113,6 +111,7 @@ var onLoad = function(){
 
 var next = function(){
     clearTimeout(variables.timeout);
+    console.log(variables.timeout);
     getQuestion();
 }
 var interval = function(){};
@@ -123,6 +122,10 @@ var topCeleb = quiz({
     onLose: function(answer){
         $('.next').addClass('wrong');
         renderAnswer(false,answer.correctAnswer,answer.answers);
+    },
+    onGetQuestion: function(){
+        $('.next').hide();
+        $('.next').removeClass('animate').removeClass('wrong');
     },
     onAnswer: function(answer){
         $('li').unbind();

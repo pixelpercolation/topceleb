@@ -6,12 +6,22 @@
   }
 
   .next{
+      display: none;
     width: 100%;
     top:50%;
     transform: translateY(-50%);
     position: absolute;
     z-index: 10000;
     bottom: 0;
+  }
+  .next span{
+    position: absolute;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    z-index: 10000;
+    font-size: 11em;
   }
 
 .next svg {
@@ -29,7 +39,7 @@
   transition: stroke-dashoffset 3s linear;
   fill: #36a536;
   stroke: #2E882E;
-  stroke-width: 0.5em;
+  stroke-width: 0.25em;
 }
 .next.animate svg circle{
   stroke-dashoffset: 252;
