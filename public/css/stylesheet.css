@@ -4,61 +4,95 @@
       font-family: 'Josefin Slab', serif;
       background-color: #767676;
   }
-  .lose-screen{
-      background: #000;
+  
+  .lose-screen {
+      background: #454545;
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 100000;
-      display: none;
   }
-  .next{
-      display: none;
-    width: 100%;
-    top:50%;
-    transform: translateY(-50%);
-    position: absolute;
-    z-index: 10000;
-    bottom: 0;
-  }
-  .next span{
-    position: absolute;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    top: 50%;
-    z-index: 10000;
-    font-size: 11em;
+  
+  .lose-screen .circle {
+      margin: 0 auto;
+      border-radius: 50%;
+      border: solid 5px #fff;
+      width: 500px;
+      height: 500px;
+      background-color: #eee;
+      position: relative;
+      margin-top: 10vh;      
   }
 
-.next svg {
-    position: absolute;
-    z-index: 999;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
+  .lose-screen .circle div {
+      width: 100%;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-40%);
+  }
   
-.next svg circle {
-  transform: rotate(-90deg);
-  stroke-dashoffset: 0;
-  stroke-dasharray:252;
-  transition: stroke-dashoffset 3s linear;
-  fill: #36a536;
-  stroke: #2E882E;
-  stroke-width: 0.25em;
-}
-.next.animate svg circle{
-  stroke-dashoffset: 252;
-}
-.next.wrong svg #bar {
-  stroke: #AA3939;
-}
-.next.wrong svg circle{
-    fill: #c44242
-}
+  .lose-screen .circle div span:first-child {
+      font-size: 5em;
+      display: block;
+  }
+  
+  .lose-screen .circle div span:last-child {
+      font-size: 16em;
+      line-height: 0.85;      
+  }
+  
+  .next {
+      display: none;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      position: absolute;
+      z-index: 10000;
+      bottom: 0;
+  }
+  
+  .next span {
+      position: absolute;
+      color: #fff;
+      width: 100%;
+      text-align: center;
+      top: 50%;
+      z-index: 10000;
+      font-size: 11em;
+  }
+  
+  .next svg {
+      position: absolute;
+      z-index: 999;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  
+  .next svg circle {
+      transform: rotate(-90deg);
+      stroke-dashoffset: 0;
+      stroke-dasharray: 252;
+      transition: stroke-dashoffset 3s linear;
+      fill: #36a536;
+      stroke: #2E882E;
+      stroke-width: 0.25em;
+  }
+  
+  .next.animate svg circle {
+      stroke-dashoffset: 252;
+  }
+  
+  .next.wrong svg #bar {
+      stroke: #AA3939;
+  }
+  
+  .next.wrong svg circle {
+      fill: #c44242
+  }
   
   .container {
       width: 357px;
