@@ -4,7 +4,16 @@
       font-family: 'Josefin Slab', serif;
       background-color: #767676;
   }
-
+  .lose-screen{
+      background: #000;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100000;
+      display: none;
+  }
   .next{
       display: none;
     width: 100%;

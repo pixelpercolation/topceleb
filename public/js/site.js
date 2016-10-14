@@ -23,6 +23,26 @@ var quiz = function (opts) {
         this.variables[parameter] = opts[parameter];
     }
 
+    this.win = function(response,answer){
+        variables.score++;
+        variables.current = answer;
+        var exclude = variables.question.celebs.map(function (ans) {
+            return ans.index
+        }).filter(function(a){
+            return a!=answer;
+        });
+        variables.exclude = exclude[0];
+        variables.timeout = setTimeout(function () {
+            getQuestion();
+        }, variables.timeoutLength);
+        variables.onWin(response);
+    }
+    this.lose = function(response,answer){
+        variables.current = null;
+        variables.exclude = null;
+        variables.score = 0;
+        variables.onLose(response);
+    }
     this.getQuestion = function () {
         variables.onGetQuestion();
         $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/getQuestion?max=" + variables.maxAns + "&current=" + variables.current +'&exclude='+variables.exclude, function (question) {
@@ -37,24 +57,11 @@ var quiz = function (opts) {
         }).join(',');
         $.get("https://wt-neonboxx-googlemail_com-0.run.webtask.io/checkAnswer?question=" + variables.question.question.type + "&answer=" + answer + "&options=" + options, function (response) {
             if (response.correct) {
-                variables.score++;
-                variables.current = answer;
-                var exclude = variables.question.celebs.map(function (ans) {
-                    return ans.index
-                }).filter(function(a){
-                    return a!=answer;
-                });
-                variables.exclude = exclude[0];
-                variables.onWin(response);
+                win(response, answer);
             } else {
-                variables.current = null;
-                variables.exclude = null;
-                variables.score = 0;
-                variables.onLose(response);
+                lose(response,answer);
             }
-            variables.timeout = setTimeout(function () {
-                getQuestion();
-            }, variables.timeoutLength);
+            
         });
     };
     variables.current = Math.floor((Math.random() * variables.maxAns));
@@ -102,7 +109,6 @@ var renderAnswer = function(win,answer,answers){
     correct.forEach(function(idx){
         $('li[data-idx="'+idx+'"]').find('a').removeClass('lose').addClass('win');
     });
-    $('.next').fadeIn().addClass('animate');
 }
 
 var onLoad = function(){
@@ -117,15 +123,16 @@ var next = function(){
 var interval = function(){};
 var topCeleb = quiz({
     onWin: function(answer){
+        $('.next').fadeIn().addClass('animate');
         renderAnswer(true,answer.correctAnswer,answer.answers);
     },
     onLose: function(answer){
-        $('.next').addClass('wrong');
+        $('.lose-screen').fadeIn();
         renderAnswer(false,answer.correctAnswer,answer.answers);
     },
     onGetQuestion: function(){
         $('.next').hide();
-        $('.next').removeClass('animate').removeClass('wrong');
+        $('.next').removeClass('animate');
     },
     onAnswer: function(answer){
         $('li').unbind();
