@@ -83,8 +83,8 @@
   
   .lose-screen .social ul li a i {
       font-size: 7.5vh;
-      -webkit-transition: .5s ease;
-      transition: .5s ease;
+      -webkit-transition: .3s ease;
+      transition: .3s ease;
   }
   
   .lose-screen .social ul li a:hover i {
@@ -108,8 +108,8 @@
       margin: 0 auto;
       padding: 15px;
       border-radius: 10px;
-      -webkit-transition: .5s ease;
-      transition: .5s ease;
+      -webkit-transition: .3s ease;
+      transition: .3s ease;
   }
   
   .btn-reset {
