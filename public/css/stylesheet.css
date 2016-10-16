@@ -1,54 +1,133 @@
   body {
       margin: 0;
       padding: 0;
-      font-family: 'Josefin Slab', serif;
-      background-color: #767676;
+      font-family: 'Ubuntu', sans-serif;
+      background-color: #0A6161;
   }
   
   .lose-screen {
-      background: #454545;
+      background: #7BC4C4;
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 100000;
-      display: none;
+      /*display: none;*/
   }
   
   .lose-screen .circle {
-      margin: 0 auto;
       border-radius: 50%;
-      border: solid 5px #fff;
-      width: 500px;
-      height: 500px;
-      background-color: #eee;
+      border: solid 10px #0A6161;
+      width: 37.5vh;
+      height: 37.5vh;
+      background-color: #fff;
       position: relative;
-      margin-top: 10vh;      
+      margin: 7.5vh auto 7.5vh auto;
+      color: #0A6161;
   }
-
+  
   .lose-screen .circle div {
       width: 100%;
       position: absolute;
       text-align: center;
       top: 50%;
+      -webkit-transform: translateY(-40%);
       transform: translateY(-40%);
   }
   
+  .lose-screen .btn {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      margin-bottom: 7.5vh;
+      outline: none;
+  }
+  
   .lose-screen .circle div span:first-child {
-      font-size: 5em;
+      font-size: 2.5em;
       display: block;
+      font-weight: 700;
   }
   
   .lose-screen .circle div span:last-child {
-      font-size: 16em;
-      line-height: 0.85;      
+      font-size: 8em;
+      font-weight: 700;
+  }
+  
+  .lose-screen .social {
+      margin-top: 5.5vh;
+      width: 100%;
+  }
+  
+  .lose-screen .social ul {
+      text-align: center;
+      padding: 0;
+  }
+  
+  .lose-screen .social ul li {
+      list-style: none;
+      display: inline-block;
+      text-align: center;
+      margin: 0 10px;
+      width: 10vh;
+      height: 10vh;
+  }
+  
+  .lose-screen .social ul li a {
+      width: 100%;
+      color: #0A6161;
+  }
+  
+  .lose-screen .social ul li a i {
+      font-size: 7.5vh;
+      -webkit-transition: .5s ease;
+      transition: .5s ease;
+  }
+  
+  .lose-screen .social ul li a:hover i {
+      color: #fff
+  }
+  
+  .lose-screen .comment {
+      width: 100%;
+      font-size: 2em;
+      font-weight: 600;
+      color: #0A6161;
+      text-align: center;
+  }
+  
+  .btn {
+      border: none;
+      width: 50vw;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.5em;
+      margin: 0 auto;
+      padding: 15px;
+      border-radius: 10px;
+      -webkit-transition: .5s ease;
+      transition: .5s ease;
+  }
+  
+  .btn-reset {
+      background: #0A6161;
+      border: solid 10px #0A6161;
+      color: #fff;
+  }
+  
+  .btn-reset:hover {
+      background: #fff;
+      color: #0A6161;
   }
   
   .next {
       display: none;
       width: 100%;
       top: 50%;
+      -webkit-transform: translateY(-50%);
       transform: translateY(-50%);
       position: absolute;
       z-index: 10000;
@@ -57,12 +136,12 @@
   
   .next span {
       position: absolute;
-      color: #fff;
+      color: #3CB73C;
       width: 100%;
       text-align: center;
       top: 50%;
       z-index: 10000;
-      font-size: 11em;
+      font-size: 5.5em;
   }
   
   .next svg {
@@ -70,29 +149,24 @@
       z-index: 999;
       top: 50%;
       left: 50%;
+      -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
   }
   
   .next svg circle {
+      -webkit-transform: rotate(-90deg);
       transform: rotate(-90deg);
       stroke-dashoffset: 0;
       stroke-dasharray: 252;
+      -webkit-transition: stroke-dashoffset 3s linear;
       transition: stroke-dashoffset 3s linear;
-      fill: #36a536;
-      stroke: #2E882E;
+      fill: #dcf4dc;
+      stroke: #3CB73C;
       stroke-width: 0.25em;
   }
   
   .next.animate svg circle {
       stroke-dashoffset: 252;
-  }
-  
-  .next.wrong svg #bar {
-      stroke: #AA3939;
-  }
-  
-  .next.wrong svg circle {
-      fill: #c44242
   }
   
   .container {
@@ -109,12 +183,12 @@
       right: 0;
       z-index: 100;
       color: #fff;
-      font-size: 5em;
-      width: 100px;
-      height: 100px;
+      font-size: 2.5em;
+      width: 50px;
+      height: 50px;
       border: solid 5px #fff;
-      border-radius: 25px;
-      margin: 20px;
+      border-radius: 10px;
+      margin: 10px;
       text-align: center;
   }
   
@@ -129,12 +203,12 @@
       width: 100%;
       color: #fff;
       text-align: center;
-      font-size: 10em;
+      font-size: 5em;
       -webkit-transition: .5s ease;
       transition: .5s ease;
   }
   
-  ul {
+  .game ul {
       padding: 0;
       margin: 0;
       list-style: none;
@@ -143,7 +217,8 @@
       width: 100%;
   }
   
-  li {
+  .game ul li {
+      -webkit-transition: all 2s;
       transition: all 2s;
       background-size: cover;
       background-position: center;
@@ -153,7 +228,7 @@
       position: relative;
   }
   
-  a {
+  .game ul li a {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -161,7 +236,7 @@
       z-index: 101;
       font-size: 100px;
       color: #fff;
-      font-size: 5em;
+      font-size: 2.5em;
       -webkit-transition: background-color .5s;
       transition: background-color .5s;
   }
@@ -175,7 +250,7 @@
       position: absolute;
       right: 0;
       margin: 0;
-      padding: 20px;
+      padding: 10px;
       word-spacing: 100000em;
   }
   
@@ -206,12 +281,12 @@
   }
   
   .win {
-      background-color: #2E882E;
+      background-color: #3CB73C;
       opacity: 0.5;
   }
   
   .lose {
-      background-color: #AA3939;
+      background-color: #E54B4B;
       opacity: 0.5;
   }
   
