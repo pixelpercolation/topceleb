@@ -40,8 +40,15 @@ var quiz = function (opts) {
     this.lose = function(response,answer){
         variables.current = null;
         variables.exclude = null;
-        variables.score = 0;
         variables.onLose(response);
+    }
+    this.reset = function(){
+        variables.score = 0;
+        getQuestion();
+        setTimeout(function() {
+            $('.lose-screen').fadeOut();    
+        }, 200);
+        
     }
     this.getQuestion = function () {
         variables.onGetQuestion();
@@ -113,11 +120,11 @@ var renderAnswer = function(win,answer,answers){
 
 var onLoad = function(){
     $('.next').click(next);
+    $('.reset').click(reset);
 }
 
 var next = function(){
     clearTimeout(variables.timeout);
-    console.log(variables.timeout);
     getQuestion();
 }
 var interval = function(){};
@@ -127,8 +134,9 @@ var topCeleb = quiz({
         renderAnswer(true,answer.correctAnswer,answer.answers);
     },
     onLose: function(answer){
+        $('.game-over-score').text(variables.score);
         $('.lose-screen').fadeIn();
-        renderAnswer(false,answer.correctAnswer,answer.answers);
+        //renderAnswer(false,answer.correctAnswer,answer.answers);
     },
     onGetQuestion: function(){
         $('.next').hide();
