@@ -21,9 +21,9 @@
       border: solid 10px #0A6161;
       width: 37.5vh;
       height: 37.5vh;
-      background-color: #fff;
+      background-color: #f0f8f8;
       position: relative;
-      margin: 7.5vh auto 7.5vh auto;
+      margin: 7.5vh auto 10vh auto;
       color: #0A6161;
   }
   
@@ -42,18 +42,17 @@
       left: 50%;
       -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
-      margin-bottom: 7.5vh;
       outline: none;
   }
   
   .lose-screen .circle div span:first-child {
-      font-size: 2.5em;
+      font-size: 8vw;
       display: block;
       font-weight: 700;
   }
   
   .lose-screen .circle div span:last-child {
-      font-size: 8em;
+      font-size: 35vw;
       font-weight: 700;
   }
   
@@ -83,8 +82,8 @@
   
   .lose-screen .social ul li a i {
       font-size: 7.5vh;
-      -webkit-transition: .3s ease;
-      transition: .3s ease;
+      -webkit-transition: color .3s ease;
+      transition: color .3s ease;
   }
   
   .lose-screen .social ul li a:hover i {
@@ -92,8 +91,8 @@
   }
   
   .lose-screen .comment {
-      width: 100%;
-      font-size: 2em;
+      width: 110%;
+      font-size: 8vw;
       font-weight: 600;
       color: #0A6161;
       text-align: center;
@@ -101,25 +100,26 @@
   
   .btn {
       border: none;
-      width: 50vw;
+      width: 100%;
+      /*width: 50vw;*/
       text-align: center;
       font-weight: 700;
-      font-size: 2.5em;
+      font-size: 10vw;
       margin: 0 auto;
-      padding: 15px;
-      border-radius: 10px;
-      -webkit-transition: .3s ease;
-      transition: .3s ease;
+      padding: 30px;
+      /*padding: 15px;*/
+      -webkit-transition: background-color .3s ease;
+      transition: background-color .3s ease;
   }
   
   .btn-reset {
       background: #0A6161;
-      border: solid 10px #0A6161;
+      /*border: solid 10px #0A6161;*/
       color: #fff;
   }
   
   .btn-reset:hover {
-      background: #fff;
+      background: #f0f8f8;
       color: #0A6161;
   }
   
