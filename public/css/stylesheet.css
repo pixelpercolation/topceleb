@@ -5,29 +5,35 @@
       background-color: #0A6161;
   }
   
-  .lose-screen {
-      background: #7BC4C4;
+  .menu {
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 100000;
-      /*display: none;*/
+      display: none;
+  }
+
+  .menu#lose {
+      background: #7BC4C4;      
   }
   
-  .lose-screen .circle {
+  .menu .circle {
       border-radius: 50%;
-      border: solid 10px #0A6161;
       width: 37.5vh;
       height: 37.5vh;
-      background-color: #f0f8f8;
       position: relative;
       margin: 7.5vh auto 10vh auto;
-      color: #0A6161;
+  }
+
+  .menu#lose .circle {
+      border: solid 10px #0A6161;
+      background-color: #f0f8f8;
+      color: #0A6161;      
   }
   
-  .lose-screen .circle div {
+  .menu .circle div {
       width: 100%;
       position: absolute;
       text-align: center;
@@ -36,7 +42,7 @@
       transform: translateY(-40%);
   }
   
-  .lose-screen .btn {
+  .menu .btn {
       position: absolute;
       bottom: 0;
       left: 50%;
@@ -45,28 +51,28 @@
       outline: none;
   }
   
-  .lose-screen .circle div span:first-child {
+  .menu .circle div span:first-child {
       font-size: 8vw;
       display: block;
       font-weight: 700;
   }
   
-  .lose-screen .circle div span:last-child {
-      font-size: 35vw;
+  .menu .circle div span:last-child {
+      font-size: 36vw;
       font-weight: 700;
   }
   
-  .lose-screen .social {
+  .menu .social {
       margin-top: 5.5vh;
       width: 100%;
   }
   
-  .lose-screen .social ul {
+  .menu .social ul {
       text-align: center;
       padding: 0;
   }
   
-  .lose-screen .social ul li {
+  .menu .social ul li {
       list-style: none;
       display: inline-block;
       text-align: center;
@@ -75,46 +81,59 @@
       height: 10vh;
   }
   
-  .lose-screen .social ul li a {
+  .menu .social ul li a {
       width: 100%;
-      color: #0A6161;
   }
+
+  .menu#lose .social ul li a {
+      color: #0A6161;
+  }  
   
-  .lose-screen .social ul li a i {
-      font-size: 7.5vh;
+  .menu .social ul li a i {
+      font-size: 16vw;
       -webkit-transition: color .3s ease;
       transition: color .3s ease;
   }
   
-  .lose-screen .social ul li a:hover i {
+  .menu .social ul li a:hover i {
       color: #fff
   }
   
-  .lose-screen .comment {
+  .menu .comment {
       width: 110%;
       font-size: 8vw;
       font-weight: 600;
-      color: #0A6161;
       text-align: center;
   }
+
+  .menu#lose .comment {
+      color: #0A6161;
+  }  
   
   .btn {
       border: none;
       width: 100%;
-      /*width: 50vw;*/
       text-align: center;
       font-weight: 700;
       font-size: 10vw;
       margin: 0 auto;
       padding: 30px;
-      /*padding: 15px;*/
       -webkit-transition: background-color .3s ease;
       transition: background-color .3s ease;
   }
   
+  .btn-start {
+      /*background: #0A6161;*/
+      color: #fff;
+  }
+
+  .btn-start:hover {
+      /*background: #f0f8f8;*/
+      color: #0A6161;
+  }
+
   .btn-reset {
       background: #0A6161;
-      /*border: solid 10px #0A6161;*/
       color: #fff;
   }
   
@@ -134,14 +153,16 @@
       bottom: 0;
   }
   
-  .next span {
+  .next span i {
       position: absolute;
       color: #3CB73C;
       width: 100%;
       text-align: center;
       top: 50%;
       z-index: 10000;
-      font-size: 5.5em;
+      font-size: 36vw;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);      
   }
   
   .next svg {
@@ -183,7 +204,7 @@
       right: 0;
       z-index: 100;
       color: #fff;
-      font-size: 2.5em;
+      font-size: 10vw;
       width: 50px;
       height: 50px;
       border: solid 5px #fff;
@@ -203,7 +224,7 @@
       width: 100%;
       color: #fff;
       text-align: center;
-      font-size: 5em;
+      font-size: 18vw;
       -webkit-transition: .5s ease;
       transition: .5s ease;
   }
@@ -236,7 +257,7 @@
       z-index: 101;
       font-size: 100px;
       color: #fff;
-      font-size: 2.5em;
+      font-size: 8vw;
       -webkit-transition: background-color .5s;
       transition: background-color .5s;
   }
